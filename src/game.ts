@@ -1,6 +1,4 @@
-///// Custom components
-
-
+///// Custom component
 
 @Component('doorState')
 export class DoorState {
@@ -16,7 +14,7 @@ const doors = engine.getComponentGroup(DoorState)
 const refreshInterval: number = 1
 let refreshTimer: number = refreshInterval
 
-//// Systems
+///// Systems
 
 export class RotatorSystem implements ISystem {
  
@@ -54,36 +52,36 @@ export class CheckServer implements ISystem {
 engine.addSystem(new CheckServer())
 
 
-/////// Add scenery
+/////// Add entities and their components
 
 let collideBox = new BoxShape()
 collideBox.withCollisions = true
 
 // Define fixed walls
 const wall1 = new Entity()
-wall1.set(new Transform({
+wall1.add(new Transform({
   position: new Vector3(5.75, 1, 3),
   scale: new Vector3(1.5, 2, 0.05)
 }))
-wall1.set(collideBox)
+wall1.add(collideBox)
 engine.addEntity(wall1)
 
 const wall2 = new Entity()
-wall2.set(new Transform({
+wall2.add(new Transform({
   position: new Vector3(3.25, 1, 3),
   scale: new Vector3(1.5, 2, 0.05)
 }))
-wall2.set(collideBox)
+wall2.add(collideBox)
 engine.addEntity(wall2)
 
 
 // Add actual door to scene. This entity doesn't rotate, its parent drags it with it.
 const door = new Entity()
-door.set(new Transform({
+door.add(new Transform({
   position: new Vector3(0.5, 0, 0),
   scale: new Vector3(1, 2, 0.05)
 }))
-door.set(collideBox)
+door.add(collideBox)
 engine.addEntity(door)
 
 // Define a material to color the door red
@@ -93,21 +91,21 @@ doorMaterial.metallic = 0.9
 doorMaterial.roughness = 0.1
 
 // Assign the material to the door
-door.set(doorMaterial)
+door.add(doorMaterial)
 
 // Define wrapper entity to rotate door. This is the entity that actually rotates.
 const doorPivot = new Entity()
-doorPivot.set(new Transform({
+doorPivot.add(new Transform({
   position: new Vector3(4, 1, 3)
 }))
-doorPivot.set(new DoorState())
+doorPivot.add(new DoorState())
 engine.addEntity(doorPivot)
 
 // Set the door as a child of doorPivot
 door.setParent(doorPivot)
 
 // Set the click behavior for the door
-door.set(
+door.add(
   new OnClick(e => {
     let state = door.getParent().get(DoorState)
     state.closed = !state.closed
