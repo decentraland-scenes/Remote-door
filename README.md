@@ -66,3 +66,6 @@ Learn more about how to build your own scenes in our [documentation](https://doc
 
 
 
+## Copyright info
+
+This scene is protected with a standard Apache 2 licence. See the terms and conditions in the [LICENSE](/LICENSE) file.
