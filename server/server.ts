@@ -21,7 +21,7 @@ let closed : boolean = true
 //
 //POST close door
 //
-doorRouter.get("/close", function(req: express.Request, res: express.Response) {
+doorRouter.getComponent("/close", function(req: express.Request, res: express.Response) {
   closed = true
   console.log("CLOSED DOOR", closed)
 
@@ -31,14 +31,14 @@ doorRouter.get("/close", function(req: express.Request, res: express.Response) {
 
 // POST open door
 
-doorRouter.get("/open", function(req: express.Request, res: express.Response) {
+doorRouter.getComponent("/open", function(req: express.Request, res: express.Response) {
 
   closed = false
   console.log("OPENED DOOR", closed)
   res.status(200).json({"state":closed})
 });
 
-doorRouter.get("/state", function(req: express.Request, res: express.Response) {
+doorRouter.getComponent("/state", function(req: express.Request, res: express.Response) {
   res.status(200).json({"state":closed})
 });
 

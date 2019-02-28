@@ -20,8 +20,8 @@ export class RotatorSystem implements ISystem {
  
   update(dt: number) {
     for (let door of doors.entities) {
-      let state = door.get(DoorState)
-      let transform = door.get(Transform)
+      let state = door.getComponent(DoorState)
+      let transform = door.getComponent(Transform)
       
       if (state.closed == false && state.fraction < 1) {
         state.fraction += dt
@@ -59,29 +59,29 @@ collideBox.withCollisions = true
 
 // Define fixed walls
 const wall1 = new Entity()
-wall1.add(new Transform({
+wall1.addComponent(new Transform({
   position: new Vector3(5.75, 1, 3),
   scale: new Vector3(1.5, 2, 0.05)
 }))
-wall1.add(collideBox)
+wall1.addComponent(collideBox)
 engine.addEntity(wall1)
 
 const wall2 = new Entity()
-wall2.add(new Transform({
+wall2.addComponent(new Transform({
   position: new Vector3(3.25, 1, 3),
   scale: new Vector3(1.5, 2, 0.05)
 }))
-wall2.add(collideBox)
+wall2.addComponent(collideBox)
 engine.addEntity(wall2)
 
 
 // Add actual door to scene. This entity doesn't rotate, its parent drags it with it.
 const door = new Entity()
-door.add(new Transform({
+door.addComponent(new Transform({
   position: new Vector3(0.5, 0, 0),
   scale: new Vector3(1, 2, 0.05)
 }))
-door.add(collideBox)
+door.addComponent(collideBox)
 engine.addEntity(door)
 
 // Define a material to color the door red
@@ -91,23 +91,23 @@ doorMaterial.metallic = 0.9
 doorMaterial.roughness = 0.1
 
 // Assign the material to the door
-door.add(doorMaterial)
+door.addComponent(doorMaterial)
 
 // Define wrapper entity to rotate door. This is the entity that actually rotates.
 const doorPivot = new Entity()
-doorPivot.add(new Transform({
+doorPivot.addComponent(new Transform({
   position: new Vector3(4, 1, 3)
 }))
-doorPivot.add(new DoorState())
+doorPivot.addComponent(new DoorState())
 engine.addEntity(doorPivot)
 
 // Set the door as a child of doorPivot
 door.setParent(doorPivot)
 
 // Set the click behavior for the door
-door.add(
-  new OnClick(e => {
-    let state = door.getParent().get(DoorState)
+door.addComponent(
+  new OnPointerDown(e => {
+    let state = door.getParent().getComponent(DoorState)
     state.closed = !state.closed
     callAPI(state.closed)
   })
@@ -157,7 +157,7 @@ function getFromServer(){
       let json = await response.json()
       log("sent request to API")
       log(json)
-      doorPivot.get(DoorState).closed = json.state
+      doorPivot.getComponent(DoorState).closed = json.state
         
     } catch {
       log("failed to reach URL")
