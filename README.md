@@ -1,4 +1,4 @@
-# Block Dog
+# Remote server door
 
 A scene that uses a server and a REST API to sync a scene state amongst multiple users. It’s built around the basic “open the door” example.
 
@@ -35,7 +35,10 @@ Once you've installed the CLI, download this example and navigate to its directo
 cd server
 
 # install node dependencies
-npm install
+npm i
+
+# build the server
+npm run build
 
 # start the server
 npm start
@@ -46,9 +49,6 @@ npm start
 ```sh
 # from the project root
 cd scene
-
-# install node dependencies
-npm install
 
 # start the preview
 dcl start

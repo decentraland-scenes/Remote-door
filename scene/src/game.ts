@@ -107,9 +107,9 @@ door.setParent(doorPivot)
 // Set the click behavior for the door
 door.addComponent(
   new OnClick(e => {
-    let state = door.getParent().getComponent(DoorState)
-    state.closed = !state.closed
-    callAPI(state.closed)
+    let currentState = door.getParent().getComponent(DoorState)
+    currentState.closed = !currentState.closed
+    callAPI(currentState.closed)
   })
 )
 
